@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Section from './Section/Section';
 import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 import Statistics from './Statistics/Statistics';
@@ -10,54 +10,58 @@ const options = [
   { title: 'Bad', name: 'bad' },
 ];
 
-export class App extends React.Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+export const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  onButtonClick = e => {
+  const onButtonClick = (e) => {
     const { name } = e.target;
-    this.setState(prevState => ({ [name]: prevState[name] + 1 }));
-  };
 
-  countTotalFeedback = () => {
-    const total = Object.values(this.state);
-    return total.reduce((acc, value) => (acc += value), 0);
+    switch (name) {
+      case "good":
+        setGood((prev) => prev + 1);
+        break;
+      case "neutral":
+        setNeutral((prev) => prev + 1);
+        break;
+      case "bad":
+        setBad((prev) => prev + 1);
+        break;
+      default:
+        return;
+    }
   };
-
-  countPositiveFeedbackPercentage = countTotalFeedback => {
+  
+  const total = good + neutral + bad;
+  
+    const countPositiveFeedbackPercentage = total => {
     let procentNumber = Math.round(
-      (this.state.good / countTotalFeedback) * 100
+      (good / total) * 100
     );
     return procentNumber > 0 ? procentNumber : 0;
   };
 
-  render() {
-    const { good, neutral, bad } = this.state;
+
     return (
       <>
         <FeedbackOptions
           options={options}
-          onLeaveFeedback={this.onButtonClick}
+          onLeaveFeedback={onButtonClick}
         />
         <Section title="Statistics">
-          {this.countTotalFeedback() === 0 ? (
+          {total === 0 ? (
             <Notification message="There is no feedback" />
           ) : (
             <Statistics
               good={good}
               neutral={neutral}
               bad={bad}
-              total={this.countTotalFeedback(good, neutral, bad)}
-              positivePercentage={this.countPositiveFeedbackPercentage(
-                this.countTotalFeedback()
-              )}
+              total={total}
+              positivePercentage={countPositiveFeedbackPercentage(total)}
             />
           )}
         </Section>
       </>
     );
-  }
-}
+};
