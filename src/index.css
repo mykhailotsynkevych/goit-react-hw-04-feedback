@@ -1,6 +1,9 @@
 @import-normalize; /* bring in normalize.css styles */
 
 body {
+  background: linear-gradient(to bottom, #59c173, #a17fe0, #5d26c1);
+  height: 100vh;
+
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

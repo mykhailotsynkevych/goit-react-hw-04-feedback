@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './App.css'
 import Section from './Section/Section';
 import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 import Statistics from './Statistics/Statistics';
@@ -44,7 +45,7 @@ export const App = () => {
 
 
     return (
-      <>
+      <div className='App'>
         <FeedbackOptions
           options={options}
           onLeaveFeedback={onButtonClick}
@@ -62,6 +63,6 @@ export const App = () => {
             />
           )}
         </Section>
-      </>
+      </div>
     );
 };
